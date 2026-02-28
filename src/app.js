@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-
+import AppError from "./utils/AppError.js";
+import errorMiddleware from './middlewares/error.middleware.js';
 const app = express();
 
 // Middleware
@@ -15,6 +16,7 @@ app.use(cors(
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
+app.use(errorMiddleware);
 
 // Routes
 app.get('/api/health', (req, res) => {
@@ -24,7 +26,5 @@ app.get('/api/health', (req, res) => {
         message: 'API is healthy',
     })
 });
-
-// app.use(errorMiddleware);
 
 export default app;
