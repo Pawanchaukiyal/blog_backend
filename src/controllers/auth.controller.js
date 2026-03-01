@@ -2,7 +2,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { registerUser, loginUser } from "../services/auth.service.js";
 import { generateToken } from "../utils/jwt.js";
 import cloudinary from "../config/cloudinary.js";
-
+import User from "../models/user.model.js";
 export const signup = asyncHandler(async (req, res) => {
   let imageUrl = "";
 
@@ -73,5 +73,16 @@ export const logout = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: "Logged out successfully"
+  });
+});
+
+export const getMe = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user.id).select(
+    "email profileImage role"
+  );
+
+  res.status(200).json({
+    success: true,
+    data: user
   });
 });
