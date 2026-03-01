@@ -1,14 +1,14 @@
-import app from './src/app.js';
 import dotenv from 'dotenv';
-import connectDB from './src/config/db.js';
-import autRoutes from './src/routes/auth.routes.js';
 dotenv.config();
-connectDB();
+
+import app from './src/app.js';
+import connectDB from './src/config/db.js';
+import mongoose from 'mongoose';
+
 
 const PORT = process.env.PORT || 5000;
 
-//Routes
-app.use('/api/auth', autRoutes);
+connectDB();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
