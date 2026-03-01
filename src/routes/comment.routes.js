@@ -4,7 +4,8 @@ import {
   addCommentController,
   getCommentsController
 } from "../controllers/comment.controller.js";
-import { validate } from "../middleware/validate.middleware.js";
+import { commentValidator } from "../validators/comment.validator.js";
+import { validate } from "../middlewares/validation.middleware.js";
 
 const router = express.Router();
 
