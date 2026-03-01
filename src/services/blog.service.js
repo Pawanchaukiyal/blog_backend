@@ -1,5 +1,5 @@
 import Blog from '../models/blog.model.js';
-import AppError from '../utils/appError.js';
+import AppError from '../utils/AppError.js';
 
 export const createBlog = async (data, userId) => {
 const blog = await Blog.create({
