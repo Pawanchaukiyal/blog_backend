@@ -28,7 +28,7 @@ export const getSingleBlog = async (id) =>{
     return blog;
 }
 
-export const updateBlog = async(id, data, user) =>{
+export const updateBlog = async(id, data, user, file) =>{
     const blog = await Blog.findById(id);
 
     if(!blog)
@@ -43,10 +43,24 @@ export const updateBlog = async(id, data, user) =>{
   blog.title = data.title || blog.title;
   blog.description = data.description || blog.description;
 
-  await blog.save();
+ if (file) {
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        { folder: "blog_images" },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      stream.end(file.buffer);
+    });
 
+    blog.image = result.secure_url;
+  }
+
+  await blog.save();
   return blog;
-}
+};
 
 export const deleteBlog = async(id, user) =>{
     const blog = await Blog.findById(id);

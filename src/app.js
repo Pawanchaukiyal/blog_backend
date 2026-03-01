@@ -6,6 +6,8 @@ import errorMiddleware from './middlewares/error.middleware.js';
 
 import authRoutes from './routes/auth.routes.js';
 import blogRoutes from "./routes/blog.routes.js";
+import commentRoutes from "./routes/comment.routes.js";
+
 const app = express();
 
 // Middleware
@@ -23,6 +25,8 @@ app.use(morgan('dev'));
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/blogs", blogRoutes);
+app.use("/api/comments", commentRoutes);
+
 app.use(errorMiddleware);
 
 export default app;

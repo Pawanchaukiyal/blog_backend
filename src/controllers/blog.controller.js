@@ -65,7 +65,8 @@ export const updateBlogController = asyncHandler(async(req,res)=>{
   const blog = await updateBlog(
     req.params.id,
     req,body,
-    req.user
+    req.user,
+    req.file
   );
   res.status(200).json({
     success:true,
