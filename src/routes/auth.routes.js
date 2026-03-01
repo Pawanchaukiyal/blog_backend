@@ -6,7 +6,7 @@ import {protect} from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/upload.middleware.js";
 const router = express.Router();
 
-router.post("/signup", upload.single("ProfileImage"), signupValidator, validate, signup);
+router.post("/signup", upload.single("profileImage"), signupValidator, validate, signup);
 router.post("/login", loginValidator, validate, login);
 router.post("/logout", logout);
 router.get("/me",protect,(req,res)=>{
