@@ -9,8 +9,9 @@ import blogRoutes from "./routes/blog.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
 
 const app = express();
+app.set("trust proxy", 1);
 
-// Middleware
+
 app.use(cors(
     {
         origin: process.env.FRONTEND_URL,
