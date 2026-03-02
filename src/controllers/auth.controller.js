@@ -37,31 +37,38 @@ export const signup = asyncHandler(async (req, res) => {
     },
   });
 });
-export const login = asyncHandler(async(req, res)=>{
-    const {email, password} = req.body;
+export const login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
 
-    const user = await loginUser(email, password);
+  const user = await loginUser(email, password);
 
-    const token = generateToken({
-        id: user._id,
-        role: user.role
-    })
+  const token = generateToken({
+    id: user._id,
+    role: user.role
+  })
 
-    res.cookie('token', token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: 'lax'
-    })
+  // res.cookie('token', token, {
+  //     httpOnly: true,
+  //     secure: false,
+  //     sameSite: 'lax'
+  // })
+  const isProduction = process.env.NODE_ENV === "production";
 
-    res.status(200).json({
-        success: true,
-        message: 'User logged in successfully',
-        data:{
-            id: user._id,
-            email: user.email,
-            role: user.role
-        }
-    })
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? "none" : "lax",
+  });
+
+  res.status(200).json({
+    success: true,
+    message: 'User logged in successfully',
+    data: {
+      id: user._id,
+      email: user.email,
+      role: user.role
+    }
+  })
 })
 
 export const logout = asyncHandler(async (req, res) => {
